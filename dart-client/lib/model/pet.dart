@@ -39,8 +39,8 @@ class Pet {
     name =
         json['name']
     ;
-    photoUrls =
-        (json['photoUrls'] as List).map((item) => item as String).toList()
+    photoUrls = json.containsKey('photoUrls')?
+        (json['photoUrls'] as List).map((item) => item as String).toList(): List()
     ;
     tags =
       Tag.listFromJson(json['tags'])

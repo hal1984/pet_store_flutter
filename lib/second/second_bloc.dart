@@ -11,12 +11,13 @@ class PetBloc extends Bloc<PetEvent, List<Pet>> {
   List<Pet> get initialState => [];
 
   @override
-  Stream<List<Pet>> mapEventToState( List<Pet> currentState, PetEvent event) async* {
+  Stream<List<Pet>> mapEventToState( List<Pet> currentState, PetEvent event) {
     switch (event) {
       case PetEvent.findByStatus:
-        var pets = await this.petApi.findPetsByStatus(['available']);
-        yield pets;
-        break;
+        var pets = this.petApi.findPetsByStatus(['available']).asStream();
+        return pets;
+      default:
+        return Future.value(currentState).asStream();
     }
   }
 }
